@@ -1,0 +1,42 @@
+
+.nt-hero-slide.active .nt-eyebrow {
+    animation: heroText .8s .2s both;
+}
+
+.nt-hero-slide.active h1 {
+    animation: heroText .95s .35s both;
+}
+
+.nt-hero-slide.active p {
+    animation: heroText .9s .5s both;
+}
+
+.nt-hero-slide.active .nt-hero-buttons {
+    animation: heroText .9s .65s both;
+}
+
+.nt-hero-slide.active .nt-hero-side-label {
+    animation: heroSide .9s .7s both;
+}
+
+@keyframes heroText {
+    from {
+        opacity: 0;
+        transform: translateY(35px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes heroSide {
+    from {
+        opacity: 0;
+        transform: translateX(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
