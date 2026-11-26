@@ -258,5 +258,89 @@ const copyrightYear = document.getElementById("ntCopyrightYear");
 if (copyrightYear) {
     copyrightYear.textContent = new Date().getFullYear();
 }
+// ----------------------------------------
+  /* Brands page: reveal on scroll + category filter. Safe to place right after </main>. */
+    (function () {
+      var root = document.documentElement;
+      var page = document.querySelector('.nt-brands-page');
+      if (!page) return;
 
+      /* Reveal */
+      var items = page.querySelectorAll('[data-nb-reveal]');
+      if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        root.classList.add('nb-js');
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { e.target.classList.add('nb-visible'); io.unobserve(e.target); }
+          });
+        }, { threshold: 0.12 });
+        items.forEach(function (el, i) {
+          el.style.transitionDelay = (el.classList.contains('nb-brand-card') ? (i % 4) * 60 : 0) + 'ms';
+          io.observe(el);
+        });
+      }
 
+      /* Filter */
+      var buttons = page.querySelectorAll('.nb-filter');
+      var cards = page.querySelectorAll('.nb-brand-card');
+      buttons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var f = btn.getAttribute('data-filter');
+          buttons.forEach(function (b) { b.classList.toggle('is-active', b === btn); });
+          cards.forEach(function (c) {
+            var show = f === 'all' || c.getAttribute('data-cat') === f;
+            c.classList.toggle('is-hidden', !show);
+            if (show) c.classList.add('nb-visible');
+          });
+        });
+      });
+    })();
+// ------------------------contact--------------------
+ document.addEventListener("DOMContentLoaded", function () {
+
+            const form = document.getElementById("ncEnquiryForm");
+            const status = document.getElementById("ncFormStatus");
+
+            if (!form) return;
+
+            form.addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                if (!form.reportValidity()) return;
+
+                const name = document.getElementById("ncName").value.trim();
+                const phone = document.getElementById("ncPhone").value.trim();
+                const email = document.getElementById("ncEmail").value.trim();
+                const subject = document.getElementById("ncSubject").value;
+                const message = document.getElementById("ncMessage").value.trim();
+
+                const whatsappMessage =
+`Hello NOOR TRADING,
+
+I would like to make an enquiry.
+
+Name: ${name}
+Phone: ${phone}
+Email: ${email || "Not provided"}
+
+Enquiry Type: ${subject}
+
+Message:
+${message}
+
+Please share the details. Thank you.`;
+
+                const whatsappURL =
+                    "https://wa.me/919825951452?text=" +
+                    encodeURIComponent(whatsappMessage);
+
+                status.textContent = "Opening WhatsApp with your enquiry...";
+
+                const newWindow = window.open(whatsappURL, "_blank");
+
+                if (!newWindow) {
+                    window.location.href = whatsappURL;
+                }
+            });
+
+        });
